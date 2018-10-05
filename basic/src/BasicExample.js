@@ -16,7 +16,7 @@ class BasicExample extends React.Component {
     console.log(`${componentName}.componentDid - Update`)
   }
 
-  componentWillUnmout() {
+  componentWillUnmount() {
     console.log(`${componentName}.componentWill - Unmount`)
   }
 

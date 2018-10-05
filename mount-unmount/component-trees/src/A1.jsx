@@ -1,8 +1,9 @@
 import React from 'react'
+import A2 from './A2'
 
-const componentName = 'Home'
+const componentName = 'A1'
 
-class Home extends React.Component {
+class A1 extends React.Component {
   componentDidMount() {
     console.log(`${componentName}.componentDid - Mount`)
   }
@@ -17,10 +18,11 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <h2>Home</h2>
+        <h2>A1</h2>
+        <A2/>
       </div>
     )
   }
 }
 
-export default Home
+export default A1
