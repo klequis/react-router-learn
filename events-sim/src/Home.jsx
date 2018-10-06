@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import * as actions from './store/actions'
+import EventCards from './EventCards'
 
-const componentName = 'EventCards'
-const log = false
 
-class EventCards extends React.Component {
+const componentName = 'Home'
+const log = true
+
+class Home extends React.Component {
   componentDidMount() {
     log && console.log(`${componentName} - Mount`)
     log && this.props.addCrumb(componentName)
@@ -22,12 +24,13 @@ class EventCards extends React.Component {
   render() {
     return (
       <div>
-        <h2>EventCards</h2>
+        <h2>Home</h2>
+        renders: <EventCards />
       </div>
     )
   }
-
 }
 
 const mstp = (state) => {return {}}
-export default connect(mstp, actions)(EventCards)
+
+export default connect(mstp, actions)(Home)
