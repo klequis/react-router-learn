@@ -3,30 +3,44 @@ import { connect } from 'react-redux'
 import * as actions from './store/actions'
 import EventCards from './EventCards'
 import { homeLogging } from './logging-control'
+import { wrapper, subComponentTitleStyle } from './styles'
 import { green , red } from './logger'
 
 const componentName = 'Home'
 const log = homeLogging
 
+const renderStyle = {
+  display: 'flex',
+  justifyContent: 'flex-start',
+}
+
 class Home extends React.Component {
   componentDidMount() {
-    log && green(`${componentName} - Mount`)
+    log && this.props.logEvent(`${componentName} - DidMount - start`, 'green')
     this.props.addCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - DidMount - end`, 'green')
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    log && console.log(`${componentName} - Update`)
+    log && this.props.logEvent(`${componentName} - DidUpdate - start`, 'blue')
+    log && this.props.logEvent(`${componentName} - DidUpdate - end`, 'blue')
   }
 
   componentWillUnmount() {
-    log && red(`${componentName} - Unmount`)
+    log && this.props.logEvent(`${componentName} - WillUnmount - start`, 'red')
     this.props.removeCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - WillUnmount - end`, 'red')
   }
+
   render() {
+    log && this.props.logEvent(`${componentName} - Render`, 'purple')
     return (
-      <div>
-        <h2>Home</h2>
-        renders: <EventCards />
+      <div style={wrapper}>
+        <div style={subComponentTitleStyle}>
+          Home
+        </div>
+        <div>renders:</div>
+        <div><EventCards /></div>
       </div>
     )
   }

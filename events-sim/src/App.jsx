@@ -9,6 +9,10 @@ import Login from './Login'
 import { appLogging } from './logging-control'
 import { green, red } from './logger'
 import { fakeApi } from './api'
+import ComponentModel from './ComponentModel'
+import EventLog from './EventLog'
+
+
 const componentName = 'App'
 const log = appLogging
 
@@ -18,23 +22,49 @@ const style = {
   flexFlow: 'column nowrap',
 }
 
+const modelLogStyle = {
+  display: 'flex',
+  flexFlow: 'row nowrap',
+}
+
+const modelStyle = {
+
+}
+
+const componentWrapStyle = {
+  display: 'flex',
+  flexFlow: 'column nowrap',
+  height: 200,
+  marginBottom: 30,
+  border: '1px solid black',
+  padding: 10,
+}
+
+const logStyle = {
+  marginLeft: 30,
+}
+
 class App extends React.Component {
   async componentDidMount() {
-    log && green(`${componentName} - Mount`)
+    log && this.props.logEvent(`${componentName} - DidMount - start`, 'green')
     this.props.addCrumb(componentName)
     await fakeApi('hi', (msg) => console.log(msg))
-
+    log && this.props.logEvent(`${componentName} - DidMount - end`, 'green')
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    log && console.log(`${componentName} - Update`)
+    log && this.props.logEvent(`${componentName} - DidUpdate - start`, 'blue')
+    log && this.props.logEvent(`${componentName} - DidUpdate - end`, 'blue')
   }
 
   componentWillUnmount() {
-    log && red(`${componentName} - Unmount`)
+    log && this.props.logEvent(`${componentName} - WillUnmount - start`, 'red')
     this.props.removeCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - WillUnmount - end`, 'red')
+
   }
   render() {
+    log && this.props.logEvent(`${componentName} - Render`, 'purple')
     return (
       <div style={style}>
       <ul>
@@ -52,11 +82,20 @@ class App extends React.Component {
           </li>
         </ul>
 
-        <hr />
-        <h1>App</h1>
-        <BreadCrumbs />
-        <Route path='/login' component={Login} />
-        <EventsController />
+        <div style={componentWrapStyle}>
+          <h2>App</h2>
+          <BreadCrumbs />
+          <Route path='/login' component={Login} />
+          <EventsController />
+        </div>
+        <div style={modelLogStyle}>
+          <div style={modelStyle}>
+            <ComponentModel />
+          </div>
+          <div style={logStyle}>
+            <EventLog />
+          </div>
+        </div>
       </div>
     )
   }

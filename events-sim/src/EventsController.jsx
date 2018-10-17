@@ -7,32 +7,42 @@ import MyEvents from './MyEvents'
 import EventDetails from './EventDetails'
 import Home from './Home'
 import { eventsControllerLogging } from './logging-control'
+import { controllerWrapper, subComponentTitleStyle } from './styles'
 import { green, red } from './logger'
 
 const componentName = 'EventsController'
 const log = eventsControllerLogging
 
+
+const titleStyle = {
+  marginRight: 30,
+}
 class EventsController extends React.Component {
   state = {
     goBack: this.props.history.goBack,
   }
   componentDidMount() {
-    log && green(`${componentName} - Mount`)
+    log && this.props.logEvent(`${componentName} - DidMount - start`, 'green')
     this.props.addCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - DidMount - end`, 'green')
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    log && console.log(`${componentName} - Update`)
+    log && this.props.logEvent(`${componentName} - DidUpdate - start`, 'blue')
+    log && this.props.logEvent(`${componentName} - DidUpdate - end`, 'blue')
   }
 
   componentWillUnmount() {
-    log && red(`${componentName} - Unmount`)
+    log && this.props.logEvent(`${componentName} - WillUnmount - start`, 'red')
     this.props.removeCrumb(componentName)
+    log && this.props.logEvent(`${componentName} - WillUnmount - end`, 'red')
   }
 
   render() {
+    log && this.props.logEvent(`${componentName} - Render`, 'purple')
     return (
-      <div>
+      <div style={controllerWrapper}>
+      <div style={subComponentTitleStyle}>EventsController</div>
         <Route exact path="/" component={Home} />
         <Route exact path="/new-event" component={CreateEvent} />
         <Route exact path="/new-event/:id" component={CreateEvent} />

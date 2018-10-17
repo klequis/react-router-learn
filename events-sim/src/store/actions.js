@@ -15,3 +15,18 @@ export const removeCrumb = (crumb) => {
   }
 }
 
+export const logEvent = (message, color) => {
+  return ({
+    type: 'logEvent',
+    payload: {
+      message,
+      color,
+    },
+  })
+}
+
+export const clearLog = (message) => {
+  return ({
+    type: 'clearLog',
+  })
+}

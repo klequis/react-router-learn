@@ -54,7 +54,21 @@ export const mountCount = (state = [], { type, payload }) => {
   }
 }
 
+export const logEvent = (state = [], { type, payload }) => {
+  switch (type) {
+    case 'logEvent':
+      // const msg = payload.message
+      // const item = { message: msg.message, color: msg.color }
+      return append(payload, state)
+    case 'clearLog':
+      return []
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
   // breadCrumbs,
-  mountCount
+  mountCount,
+  logEvent,
 })
