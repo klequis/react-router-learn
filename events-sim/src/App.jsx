@@ -6,9 +6,12 @@ import * as actions from './store/actions'
 import BreadCrumbs from './BreadCrumbs'
 import EventsController from './EventsController'
 import Login from './Login'
-
+import { appLogging } from './logging-control'
+import { green, red } from './logger'
+import { fakeApi } from './api'
 const componentName = 'App'
-const log = false
+const log = appLogging
+
 
 const style = {
   display: 'flex',
@@ -16,9 +19,11 @@ const style = {
 }
 
 class App extends React.Component {
-  componentDidMount() {
-    log && console.log(`${componentName} - Mount`)
-    log && this.props.addCrumb(componentName)
+  async componentDidMount() {
+    log && green(`${componentName} - Mount`)
+    this.props.addCrumb(componentName)
+    await fakeApi('hi', (msg) => console.log(msg))
+
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -26,8 +31,8 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    log && console.log(`${componentName} - Unmount`)
-    log && this.props.removeCrumb(componentName)
+    log && red(`${componentName} - Unmount`)
+    this.props.removeCrumb(componentName)
   }
   render() {
     return (

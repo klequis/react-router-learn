@@ -11,31 +11,34 @@ const crumb = {
   float: 'left',
 }
 
-const getByName = ( crumb, mountCount) => {
-  const idx = mountCount.findIndex(i => i.name === crumb)
-  return mountCount[idx]
+const filterMountCount = (mountCount) => {
+  return mountCount.filter(mc => mc.visible === true)
 }
 
-const BreadCrumbs = ({ crumbs, mountCount }) => {
+const textColor = (mountItem) => {
+  return {
+    color: mountItem.mountCount <= mountItem.unmountCount
+  }
+}
+
+const BreadCrumbs = ({ mountCount }) => {
   console.log('mountCount', mountCount)
+
+  const mountedItems = filterMountCount(mountCount).map(mc => {
+    return (
+      <div key={mc.name} style={crumb}><span style={textColor(mc)}>{mc.name} ({mc.mountCount}, {mc.unmountCount})</span></div>
+    )
+  })
+
   return (
     <div>
-      {
-        crumbs.map(c => {
-          const mc = getByName(c, mountCount)
-
-          return (
-            <div key={c} style={crumb}>{c} ({mc.mountCount}, {mc.unmountCount})</div>
-          )
-        })
-      }
+      {mountedItems}
     </div>
   )
 }
 
 const mstp = (state) => {
   return {
-    crumbs: state.breadCrumbs,
     mountCount: state.mountCount,
   }
 }

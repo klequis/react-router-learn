@@ -1,3 +1,4 @@
+import { orange } from '../logger'
 
 export const addCrumb = (crumb) => {
   return {
@@ -7,7 +8,7 @@ export const addCrumb = (crumb) => {
 }
 
 export const removeCrumb = (crumb) => {
-  console.log('** crumb', crumb)
+  orange('removeCrumb', crumb)
   return {
     type: 'removeCrumb',
     payload: { crumb },
